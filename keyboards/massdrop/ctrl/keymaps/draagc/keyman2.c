@@ -1,18 +1,18 @@
 /* Copyright 2022 Daniel Weeks (@xanimos)
-  *
-  * This program is free software: you can redistribute it and/or modify
-  * it under the terms of the GNU General Public License as published by
-  * the Free Software Foundation, either version 2 of the License, or
-  * (at your option) any later version.
-  *
-  * This program is distributed in the hope that it will be useful,
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  * GNU General Public License for more details.
-  *
-  * You should have received a copy of the GNU General Public License
-  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  */
+  * 
+  * This program is free software: you can redistribute it and/or modify 
+  * it under the terms of the GNU General Public License as published by 
+  * the Free Software Foundation, either version 2 of the License, or 
+  * (at your option) any later version. 
+  * 
+  * This program is distributed in the hope that it will be useful, 
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+  * GNU General Public License for more details. 
+  * 
+  * You should have received a copy of the GNU General Public License 
+  * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+  */ 
 
 #include "keymap.h"
 
@@ -51,10 +51,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB ,  KC_Q  ,  KC_W  ,  KC_E  ,  KC_R  ,  KC_T  ,  KC_Y  ,  KC_U  ,  KC_I  ,  KC_O  ,  KC_P  , KC_LBRC, KC_RBRC, KC_BSLS, KC_DEL , KC_END , KC_PGDN,
     //   CAPS       A        S        D        F        G        H        J        K        L        ;        '      ENTER
         KC_CAPS,  KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,  KC_H  ,  KC_J  ,  KC_K  ,  KC_L  , KC_SCLN, KC_QUOT, KC_ENT ,
-    //   SHIFT      Z        X        C        V        B        N        M        ,        .        /      RSHIFT                                        UP
-        KC_LSPO,  KC_Z  ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  ,  KC_N  ,  KC_M  , KC_COMM, KC_DOT , KC_SLSH, KC_RSPC,                                     KC_UP ,
-    //   CTRL      GUI      ALT                       SPACE                               RALT        MENU         RGUI          RCTRL             LEFT     DOWN     RIGHT
-       KC_LCTRL, KC_LGUI, KC_LALT,                    KC_SPC,                            KC_RALT,   KC_RGUI, MO(_FL),  KC_RCTL,          KC_LEFT, KC_DOWN, KC_RGHT
+    //   SHIFT      Z        X        C        V        B        N        M        ,        .        /      RSHIFT                               UP
+        KC_LSPO,  KC_Z  ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  ,  KC_N  ,  KC_M  , KC_COMM, KC_DOT , KC_SLSH, KC_RSPC,                             KC_UP ,
+    //   CTRL      GUI      ALT                       SPACE                               RALT     MENU     RGUI     RCTRL             LEFT     DOWN     RIGHT
+       KC_LCTRL, KC_LGUI, KC_LALT,                    KC_SPC,                   TD(TD_FN_SWITCH), KC_RALT, KC_RGUI, KC_RCTL,          KC_LEFT, KC_DOWN, KC_RGHT
     ),
     [_FL] = LAYOUT(
     //    ESC       F1       F2       F3       F4       F5       F6       F7       F8       F9       F10     F11      F12              PRINT    SCLCK    PAUSE
@@ -62,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //     ~        1        2        3        4        5        6        7        8        9        0        -        =      BCKSP     INS      HOME     PGUP
         RGB_TOG, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MSTP, KC_MPLY, KC_VOLU,
     //    TAB       Q        W        E        R        T        Y        U        I        O        P        [        ]        \       DEL      END      PGDN
-        _______, RGB_MOD, RGB_SPI, RGB_VAI, RGB_HUI, RGB_SAI, _______, _______, _______, _______, RGB_PRS, _______, _______, _______, KC_MPRV, KC_MNXT, KC_VOLD,
+        _______, RGB_MOD, RGB_SPI, RGB_VAI, RGB_HUI, RGB_SAI, _______, _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_MNXT, KC_VOLD,
     //   CAPS       A        S        D        F        G        H        J        K        L        ;        '      ENTER
         _______,RGB_RMOD, RGB_SPD, RGB_VAD, RGB_HUD, RGB_SAD, _______, _______, _______, _______, _______, _______, _______,
     //   SHIFT      Z        X        C        V        B        N        M        ,        .        /      RSHIFT                               UP
@@ -127,7 +127,7 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
     //  RGB_TOG, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MSTP, KC_MPLY, KC_VOLU,
            GOLD, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__,     RED,  SPRING,  ORANGE,
     //  _______, RGB_MOD, RGB_SPI, RGB_VAI, RGB_HUI, RGB_SAI, _______, _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_MNXT, KC_VOLD,
-        __OFF__,  ORANGE,   GREEN,   AZURE,  GOLDEN,  MAGENT, __OFF__,   AZURE,   AZURE, __OFF__, ORANGE, __OFF__, __OFF__, __OFF__,    TEAL,    TEAL,  ORANGE,
+        __OFF__,  ORANGE,   GREEN,   AZURE,  GOLDEN,  MAGENT, __OFF__,   AZURE,   AZURE, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__,    TEAL,    TEAL,  ORANGE,
     //  _______,RGB_RMOD, RGB_SPD, RGB_VAD, RGB_HUD, RGB_SAD, _______, _______, _______, _______, _______, _______, _______,
         __OFF__,  ORANGE,   GREEN,   AZURE,  GOLDEN,  MAGENT, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__,
     //  _______, _______, _______,COPY_ALL, _______, MD_BOOT, NK_TOGG, _______, _______, _______, _______, TO(_NUMPAD),                        KC_BRIU,
@@ -157,24 +157,11 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
     //  _______, _______, _______, _______, _______, _______,   KC_P7,   KC_P8,   KC_P9, _______, _______, _______, _______, _______, _______, _______, _______,
         __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__,   GREEN,   GREEN,   GREEN, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__,
     //  _______, _______, _______, _______, _______, _______,   KC_P4,   KC_P5,   KC_P6, _______, _______, _______, _______,
-        __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__,    MAGENT,    MAGENT,    MAGENT, __OFF__, __OFF__, __OFF__, __OFF__,
+        __OFF__, __OFF__, __OFF__, __OFF__, __OFF__, __OFF__,    TURQ,    TURQ,    TURQ, __OFF__, __OFF__, __OFF__, __OFF__,
     //  _______, _______, _______, _______, _______, _______,   KC_P1,   KC_P2,   KC_P3, KC_PDOT, _______, _______,                            _______,
         __OFF__, __OFF__, __OFF__, __OFF__, __OFF__,    CYAN,    CYAN,    CYAN,   AZURE, __OFF__, __OFF__, __OFF__,                            __OFF__,
     //  _______, _______, _______,                     KC_P0,                            _______, _______, _______, _______,          _______, _______, _______
         __OFF__, __OFF__, __OFF__,                      CYAN,                            __OFF__, __OFF__, __OFF__, __OFF__,          __OFF__, __OFF__, __OFF__
-    },
-};
-
-const rgb_profile PROGMEM rgb_profiles[] = {
-    {
-        .hsv = {.h = 140, .s = 255, .v = 255},
-        .speed = 111,
-        .mode = 2,
-    },
-    {
-        .hsv = {.h = 140, .s = 255, .v = 255},
-        .speed = 111,
-        .mode = 6,
     },
 };
 
@@ -194,8 +181,6 @@ void matrix_init_user(void) {
     rgb_enabled_flag = true;                            // Initially, keyboard RGB is enabled. Change to false config.h initializes RGB disabled.
     rgb_time_out_fast_mode_enabled = false;             // RGB timeout fast mode disabled initially.
     rgb_time_out_saved_flag = rgb_matrix_get_flags();   // Save RGB matrix state for when keyboard comes back from ide.
-
-    select_profile_enable = false;
 };
 
 void keyboard_post_init_user(void) {
@@ -255,36 +240,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case RGB_TOG:
-            rgb_time_out_enable = rgb_time_out_user_value;
-            if (record->event.pressed) {
+    }
+
+    if (record->event.pressed) {
+        switch (keycode) {
+            case RGB_TOG:
+                rgb_time_out_enable = rgb_time_out_user_value;
                 switch (rgb_matrix_get_flags()) {
                     case LED_FLAG_ALL: {
                         rgb_matrix_set_flags(LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR);
                         rgb_matrix_set_color_all(0, 0, 0);
-                    } break;
+                    }
+                    break;
                     case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR): {
                         rgb_matrix_set_flags(LED_FLAG_UNDERGLOW);
                         rgb_matrix_set_color_all(0, 0, 0);
-                    } break;
+                    }
+                    break;
                     case LED_FLAG_UNDERGLOW: {
                         // This line is for LED idle timer. It disables the toggle so you can turn off LED completely if you like
                         rgb_time_out_enable = false;
                         rgb_matrix_set_flags(LED_FLAG_NONE);
                         rgb_matrix_disable_noeeprom();
-                    } break;
+                    }
+                    break;
                     default: {
                         rgb_matrix_set_flags(LED_FLAG_ALL);
                         rgb_matrix_enable_noeeprom();
-                    } break;
+                    }
+                    break;
                 }
-            }
-            return false;
-    }
-
-    if (record->event.pressed) {
-        switch (keycode) {
-
+                return false;
             // ======================================================== CUSTOM KEYCOADS BELOW ========================================================
             case COPY_ALL:
                 // Selects all and text and copy
@@ -330,42 +316,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     layer_move(_KL);
                 }
                 return false;
-
-            case RGB_PRS: {
-#ifdef CONSOLE_ENABLE
-                HSV curr_hsv = rgb_matrix_get_hsv();
-                uprintf("    {\n"
-                        "        .hsv = {.h = %u, .s = %u, .v = %u},\n"
-                        "        .speed = %u,\n"
-                        "        .mode = %u,\n"
-                        "    },\n",
-                        curr_hsv.h, curr_hsv.v, curr_hsv.v, rgb_matrix_get_speed(), rgb_matrix_get_mode());
-#endif
-                select_profile_enable = !select_profile_enable;
-            }
-                return false;
-            default:
-                return true;
         }
     }
     return true;
 }
-
-void set_profile_select_color(void){
-    HSV curr_hsv = rgb_matrix_get_hsv();
-    uint8_t curr_mode = rgb_matrix_get_mode();
-    uint8_t curr_sped = rgb_matrix_get_speed();
-
-    for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
-        if(i >= 1 && i <= MIN(12, sizeof (rgb_profiles) / sizeof (rgb_profile))) {
-            rgb_matrix_set_color(i, RGB_WHITE);
-            continue;
-        }
-        rgb_matrix_set_color(i, 0, 0, 0);
-    }
-
-}
-
 
 void set_layer_color(int layer) {
     if (layer == 0) { return; }
@@ -380,9 +334,9 @@ void set_layer_color(int layer) {
             float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
             rgb_matrix_set_color(i, f * rgb.r, f * rgb.g, f * rgb.b);
             continue;
-        }
-        if(layer == _FL && i <= 8 && i >= 1) {
-            continue; // Leave RGB for F1-F8 of function layer to adjust RGB settings
+        } 
+        if(layer == _FL && i <= 4 && i >= 1) {
+            continue; // Leave RGB for F1-F4 of function layer to adjust RGB settings
         }
 
         rgb_matrix_set_color(i, 0, 0, 0);
@@ -395,11 +349,7 @@ void rgb_matrix_indicators_user(void) {
         rgb_matrix_get_flags() == LED_FLAG_UNDERGLOW) {
             return;
         }
-    if(select_profile_enable){
-        set_profile_select_color();
-    } else {
-        set_layer_color(get_highest_layer(layer_state));
-    }
+    set_layer_color(get_highest_layer(layer_state));
 }
 
 
