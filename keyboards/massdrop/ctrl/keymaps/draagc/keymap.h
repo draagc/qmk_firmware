@@ -1,18 +1,18 @@
 /* Copyright 2022 Daniel Weeks (@xanimos)
-  * 
-  * This program is free software: you can redistribute it and/or modify 
-  * it under the terms of the GNU General Public License as published by 
-  * the Free Software Foundation, either version 2 of the License, or 
-  * (at your option) any later version. 
-  * 
-  * This program is distributed in the hope that it will be useful, 
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of 
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
-  * GNU General Public License for more details. 
-  * 
-  * You should have received a copy of the GNU General Public License 
-  * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
-  */ 
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 2 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
 
 #include QMK_KEYBOARD_H
 
@@ -62,9 +62,6 @@ uint16_t rgb_time_out_seconds;          // Idle LED timeout value, in seconds no
 uint16_t rgb_time_out_saved_seconds;    // The saved user config for RGB timeout period
 led_flags_t rgb_time_out_saved_flag;    // Store LED flag before timeout so it can be restored when LED is turned on again.
 
-bool select_profile_enable;
-
-void set_profile_select_color(void);
 
 typedef struct {
     HSV     hsv;
@@ -102,11 +99,11 @@ typedef struct {
 // Declare your tapdance functions:
 
 // Function to determine the current tapdance state
-td_state_t cur_dance(qk_tap_dance_state_t *state);
+td_state_t cur_dance(tap_dance_state_t *state);
 
 // `finished` and `reset` functions for each tapdance keycode
-void fn_tap_finished(qk_tap_dance_state_t *state, void *user_data);
-void fn_tap_reset(qk_tap_dance_state_t *state, void *user_data);
+void fn_tap_finished(tap_dance_state_t *state, void *user_data);
+void fn_tap_reset(tap_dance_state_t *state, void *user_data);
 
 enum ctrl_keycodes {
     MD_BOOT = SAFE_RANGE,  // Restart into bootloader after hold timeout

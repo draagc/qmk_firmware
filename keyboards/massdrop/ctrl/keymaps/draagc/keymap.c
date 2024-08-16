@@ -14,6 +14,8 @@
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   */
 
+#include QMK_KEYBOARD_H
+#include <string.h>
 #include "keymap.h"
 
 static uint16_t idle_timer;             // Idle LED timeout timer
@@ -44,7 +46,7 @@ static const char * sendstring_commands[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_KL] = LAYOUT(
     //    ESC       F1       F2       F3       F4       F5       F6       F7       F8       F9       F10     F11      F12              PRINT    SCLCK    PAUSE
-        KC_ESC ,  KC_F1 ,  KC_F2 ,  KC_F3 ,  KC_F4 ,  KC_F5 ,  KC_F6 ,  KC_F7 ,  KC_F8 ,  KC_F9 ,  KC_F10,  KC_F11,  KC_F12,          KC_PSCR, KC_SLCK,RCS(KC_M),
+        KC_ESC ,  KC_F1 ,  KC_F2 ,  KC_F3 ,  KC_F4 ,  KC_F5 ,  KC_F6 ,  KC_F7 ,  KC_F8 ,  KC_F9 ,  KC_F10,  KC_F11,  KC_F12,          KC_PSCR, KC_SCRL,RCS(KC_M),
     //     ~        1        2        3        4        5        6        7        8        9        0        -        =      BCKSP     INS      HOME     PGUP
         KC_GRV ,  KC_1  ,  KC_2  ,  KC_3  ,  KC_4  ,  KC_5  ,  KC_6  ,  KC_7  ,  KC_8  ,  KC_9  ,  KC_0  , KC_MINS,  KC_EQL, KC_BSPC, KC_INS , KC_HOME, KC_PGUP,
     //    TAB       Q        W        E        R        T        Y        U        I        O        P        [        ]        \       DEL      END      PGDN
@@ -52,9 +54,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //   CAPS       A        S        D        F        G        H        J        K        L        ;        '      ENTER
         KC_CAPS,  KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,  KC_H  ,  KC_J  ,  KC_K  ,  KC_L  , KC_SCLN, KC_QUOT, KC_ENT ,
     //   SHIFT      Z        X        C        V        B        N        M        ,        .        /      RSHIFT                                        UP
-        KC_LSPO,  KC_Z  ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  ,  KC_N  ,  KC_M  , KC_COMM, KC_DOT , KC_SLSH, KC_RSPC,                                     KC_UP ,
+        KC_LSFT,  KC_Z  ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  ,  KC_N  ,  KC_M  , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,                                     KC_UP ,
     //   CTRL      GUI      ALT                       SPACE                               RALT        MENU         RGUI          RCTRL             LEFT     DOWN     RIGHT
-       KC_LCTRL, KC_LGUI, KC_LALT,                    KC_SPC,                            KC_RALT,   KC_RGUI, MO(_FL),  KC_RCTL,          KC_LEFT, KC_DOWN, KC_RGHT
+       KC_LCTL, KC_LGUI, KC_LALT,                    KC_SPC,                            KC_RALT,   KC_RGUI, MO(_FL),  KC_RCTL,          KC_LEFT, KC_DOWN, KC_RGHT
     ),
     [_FL] = LAYOUT(
     //    ESC       F1       F2       F3       F4       F5       F6       F7       F8       F9       F10     F11      F12              PRINT    SCLCK    PAUSE
@@ -118,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #define __OFF__ {0, 0, 0}
 
-const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
+const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [_FL] = {
         //  These remain on base layer rgb to see adjustments ;)
         //       |----------------------------------|
@@ -195,7 +197,6 @@ void matrix_init_user(void) {
     rgb_time_out_fast_mode_enabled = false;             // RGB timeout fast mode disabled initially.
     rgb_time_out_saved_flag = rgb_matrix_get_flags();   // Save RGB matrix state for when keyboard comes back from ide.
 
-    select_profile_enable = false;
 };
 
 void keyboard_post_init_user(void) {
@@ -288,7 +289,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             // ======================================================== CUSTOM KEYCOADS BELOW ========================================================
             case COPY_ALL:
                 // Selects all and text and copy
-                SEND_STRING(SS_LCTRL("ac"));
+                SEND_STRING(SS_LCTL("ac"));
                 return false;
             case ROUT_TG:
                 // Toggle idle LED timeout on or off
@@ -341,7 +342,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         "    },\n",
                         curr_hsv.h, curr_hsv.v, curr_hsv.v, rgb_matrix_get_speed(), rgb_matrix_get_mode());
 #endif
-                select_profile_enable = !select_profile_enable;
             }
                 return false;
             default:
@@ -351,25 +351,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-void set_profile_select_color(void){
-    HSV curr_hsv = rgb_matrix_get_hsv();
-    uint8_t curr_mode = rgb_matrix_get_mode();
-    uint8_t curr_sped = rgb_matrix_get_speed();
-
-    for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
-        if(i >= 1 && i <= MIN(12, sizeof (rgb_profiles) / sizeof (rgb_profile))) {
-            rgb_matrix_set_color(i, RGB_WHITE);
-            continue;
-        }
-        rgb_matrix_set_color(i, 0, 0, 0);
-    }
-
-}
-
 
 void set_layer_color(int layer) {
     if (layer == 0) { return; }
-    for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
+    for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
         HSV hsv = {
             .h = pgm_read_byte(&ledmap[layer][i][0]),
             .s = pgm_read_byte(&ledmap[layer][i][1]),
@@ -389,22 +374,19 @@ void set_layer_color(int layer) {
     }
 }
 
-void rgb_matrix_indicators_user(void) {
+bool rgb_matrix_indicators_user(void) {
     if (disable_layer_color ||
         rgb_matrix_get_flags() == LED_FLAG_NONE ||
         rgb_matrix_get_flags() == LED_FLAG_UNDERGLOW) {
-            return;
+            return false;
         }
-    if(select_profile_enable){
-        set_profile_select_color();
-    } else {
         set_layer_color(get_highest_layer(layer_state));
-    }
+    return false;
 }
 
 
 
-td_state_t cur_dance(qk_tap_dance_state_t *state) {
+td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->pressed && !state->interrupted) {
         if (state->count == 1) { return TD_SINGLE_HOLD; }
         return TD_DOUBLE_HOLD;
@@ -417,7 +399,7 @@ static td_tap_t fn_tap_state = {
     .state = TD_NONE
 };
 
-void fn_tap_finished(qk_tap_dance_state_t *state, void *user_data) {
+void fn_tap_finished(tap_dance_state_t *state, void *user_data) {
     fn_tap_state.state = cur_dance(state);
     switch (fn_tap_state.state) {
         case TD_SINGLE_HOLD:
@@ -436,7 +418,7 @@ void fn_tap_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void fn_tap_reset(qk_tap_dance_state_t *state, void *user_data) {
+void fn_tap_reset(tap_dance_state_t *state, void *user_data) {
     switch (fn_tap_state.state) {
         case TD_UNKNOWN:
             unregister_code(KC_APP);
@@ -455,6 +437,6 @@ void fn_tap_reset(qk_tap_dance_state_t *state, void *user_data) {
     fn_tap_state.state = TD_NONE;
 }
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [TD_FN_SWITCH] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_tap_finished, fn_tap_reset)
 };
